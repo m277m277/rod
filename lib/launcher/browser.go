@@ -172,7 +172,7 @@ func (lc *Browser) MustGet() string {
 	return p
 }
 
-// Validate returns nil if the browser executable valid.
+// Validate returns nil if the browser executable is valid.
 // If the executable is malformed it will return error.
 func (lc *Browser) Validate() error {
 	_, err := os.Stat(lc.BinPath())
@@ -181,6 +181,7 @@ func (lc *Browser) Validate() error {
 	}
 
 	cmd := exec.Command(lc.BinPath(), "--headless", "--no-sandbox",
+		"--use-mock-keychain", "--disable-dev-shm-usage",
 		"--disable-gpu", "--dump-dom", "about:blank")
 	b, err := cmd.CombinedOutput()
 	if err != nil {
